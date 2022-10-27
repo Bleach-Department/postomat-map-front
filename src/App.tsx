@@ -1,7 +1,9 @@
+import { Map } from "./components";
+
 type Props = {};
 
 const App = (props: Props) => {
-  return <div>App</div>;
+  return <Map />;
 };
 
 export default App;
