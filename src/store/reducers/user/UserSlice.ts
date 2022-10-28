@@ -2,10 +2,6 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { registration } from "./UserActionCreator";
 
-type availableExchangesType = {
-  [key: string]: string[];
-};
-
 interface UserState {
   test: any; // !! Example
   isLoading: boolean;
