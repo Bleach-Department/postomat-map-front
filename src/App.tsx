@@ -1,11 +1,24 @@
-import { MapGL } from "./components";
-import { GeoJsonLayer } from "@deck.gl/layers/typed";
-import { InitialViewStateType } from "./components/MapGL/types";
 import { FC, useEffect, useState } from "react";
+import { GeoJsonLayer } from "@deck.gl/layers/typed";
+
+import { MapGL } from "./components";
+
+import { InitialViewStateType } from "./components/MapGL/types";
+import { useAppDispatch, useAppSelector } from "./hooks/redux";
 
 type Props = {};
 
 const App: FC<Props> = () => {
+  /* 
+  !! useAppDispatch для вызова reducer
+  !! useAppSelector для получения стейта
+
+  const dispatch = useAppDispatch();
+  const { isLoading, test, userError } = useAppSelector(
+    (state) => state.userReducer
+  );
+  */
+
   const [initialViewState] = useState<InitialViewStateType>({
     longitude: 37.6174943,
     latitude: 55.7504461,
