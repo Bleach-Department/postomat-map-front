@@ -1,10 +1,9 @@
 import { FC, useEffect, useState } from "react";
 import { GeoJsonLayer } from "@deck.gl/layers/typed";
 
-import { MapGL } from "./components";
+import { MapGL, Sidebar } from "./components";
 
 import { InitialViewStateType } from "./components/MapGL/types";
-import { useAppDispatch, useAppSelector } from "./hooks/redux";
 
 type Props = {};
 
@@ -63,11 +62,14 @@ const App: FC<Props> = () => {
   ];
 
   return (
-    <MapGL
-      initialViewState={initialViewState}
-      mapStyle={mapStyle}
-      layers={layers}
-    />
+    <>
+      <Sidebar />
+      <MapGL
+        initialViewState={initialViewState}
+        mapStyle={mapStyle}
+        layers={layers}
+      />
+    </>
   );
 };
 
