@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 import ArrowRightIcon from "../../../icons/ArrowRightIcon";
 import "./OpenButton.css";
 
@@ -14,4 +14,4 @@ const OpenButton: FC<OpenButtonProps> = ({ isOpen }) => {
   );
 };
 
-export default OpenButton;
+export default memo(OpenButton);

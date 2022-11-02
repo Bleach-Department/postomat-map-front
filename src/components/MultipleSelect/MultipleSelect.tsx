@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, memo, useState } from "react";
 import Select, { StylesConfig } from "react-select";
 
 interface MultipleSelectProps {
@@ -18,6 +18,9 @@ const MultipleSelect: FC<MultipleSelectProps> = ({ options, title }) => {
         closeMenuOnSelect={false}
         defaultValue={[options[0], options[1]]}
         options={options}
+        maxMenuHeight={150}
+        defaultInputValue={"Выбрать"}
+        noOptionsMessage={() => "Здесь ничего нет"}
         isMulti
       />
       <div className="flex items-center my-1 gap-1">
@@ -33,4 +36,4 @@ const MultipleSelect: FC<MultipleSelectProps> = ({ options, title }) => {
   );
 };
 
-export default MultipleSelect;
+export default memo(MultipleSelect);
