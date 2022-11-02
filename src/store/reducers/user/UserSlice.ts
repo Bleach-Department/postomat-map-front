@@ -1,15 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { registration } from "./UserActionCreator";
+import { requestData } from "./UserActionCreator";
 
 interface UserState {
-  test: any; // !! Example
+  data: any;
   isLoading: boolean;
   userError: string;
 }
 
 const initialState: UserState = {
-  test: {}, // !! Example
+  data: {},
   isLoading: false,
   userError: "",
 };
@@ -17,36 +17,26 @@ const initialState: UserState = {
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: { //usual reducers
-    // !! Example
-    setTest(state, action: PayloadAction<any>) {
-      state.test = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: {
-    //for async
-    // !! Example
-    [registration.fulfilled.type]: (
+    [requestData.fulfilled.type]: (
       state,
-      action: PayloadAction<{
-        accessToken: string;
-        refresToken: string;
-      }>
+      action: PayloadAction<any>
     ) => {
-      state.test = action.payload;
+      state.data = action.payload;
       state.isLoading = false;
       state.userError = "";
     },
-    [registration.pending.type]: (state) => {
+    [requestData.pending.type]: (state) => {
       state.isLoading = true;
     },
-    [registration.rejected.type]: (state) => {
-      state.test = {};
+    [requestData.rejected.type]: (state) => {
+      state.data = {};
       state.isLoading = false;
     },
   },
 });
 
-export const { setTest } = userSlice.actions;
+// export const { setTest } = userSlice.actions;
 
 export default userSlice.reducer;

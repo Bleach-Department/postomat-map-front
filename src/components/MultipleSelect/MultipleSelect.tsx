@@ -1,5 +1,5 @@
 import { FC, memo, useState } from "react";
-import Select, { StylesConfig } from "react-select";
+import Select from "react-select";
 
 interface MultipleSelectProps {
   title?: string;
