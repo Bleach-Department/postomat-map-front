@@ -1,10 +1,12 @@
 import { FC, useEffect, useState } from "react";
 import { GeoJsonLayer } from "@deck.gl/layers/typed";
 
-import { MapGL } from "./components";
+import { MapGL, PdfReport } from "./components";
 
 import { InitialViewStateType } from "./components/MapGL/types";
 import { useAppDispatch, useAppSelector } from "./hooks/redux";
+import { Buffer } from "buffer";
+global.Buffer = Buffer;
 
 type Props = {};
 
@@ -18,6 +20,12 @@ const App: FC<Props> = () => {
     (state) => state.userReducer
   );
   */
+
+  // useEffect(() => {
+  //   if (map) {
+  //     map.on("load", () => console.log(map.getCanvas().toDataURL()));
+  //   }
+  // }, [map]);
 
   const [initialViewState] = useState<InitialViewStateType>({
     longitude: 37.6174943,
@@ -63,11 +71,14 @@ const App: FC<Props> = () => {
   ];
 
   return (
-    <MapGL
-      initialViewState={initialViewState}
-      mapStyle={mapStyle}
-      layers={layers}
-    />
+    <>
+      <MapGL
+        initialViewState={initialViewState}
+        mapStyle={mapStyle}
+        layers={layers}
+      />
+    </>
+    // <PdfReport />
   );
 };
 
