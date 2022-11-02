@@ -4,12 +4,14 @@ import { requestData } from "./UserActionCreator";
 
 interface UserState {
   data: any;
+  regions: string[];
   isLoading: boolean;
   userError: string;
 }
 
 const initialState: UserState = {
   data: {},
+  regions: [],
   isLoading: false,
   userError: "",
 };
@@ -23,7 +25,8 @@ export const userSlice = createSlice({
       state,
       action: PayloadAction<any>
     ) => {
-      state.data = action.payload;
+      state.data = action.payload.data;
+      state.regions = action.payload.regions;
       state.isLoading = false;
       state.userError = "";
     },

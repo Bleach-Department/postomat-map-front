@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FC, useState } from "react";
 
 import DownloadSection from "../DownloadSection/DownloadSection";
 import MultipleSelect from "../MultipleSelect/MultipleSelect";
@@ -8,7 +8,11 @@ import "./Sidebar.css";
 
 import { adminitriesOptions } from "./snapshots";
 
-const Sidebar = () => {
+interface SidebarProps {
+  regions: string[];
+}
+
+const Sidebar: FC<SidebarProps> = ({ regions }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -25,7 +29,7 @@ const Sidebar = () => {
 
           <MultipleSelect
             title="Административные округ(а):"
-            options={adminitriesOptions}
+            options={regions}
           />
 
           <MultipleSelect title="Район(ы):" options={adminitriesOptions} />

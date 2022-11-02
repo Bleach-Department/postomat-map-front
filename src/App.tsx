@@ -11,7 +11,7 @@ type Props = {};
 
 const App: FC<Props> = () => {
   const dispatch = useAppDispatch();
-  const { data } = useAppSelector((state) => state.userReducer);
+  const { data, regions } = useAppSelector((state) => state.userReducer);
 
   const [initialViewState] = useState<InitialViewStateType>({
     longitude: 37.6174943,
@@ -46,7 +46,7 @@ const App: FC<Props> = () => {
 
   return (
     <>
-      <Sidebar />
+      <Sidebar regions={regions} />
       <MapGL
         initialViewState={initialViewState}
         mapStyle={mapStyle}
