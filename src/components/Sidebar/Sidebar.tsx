@@ -41,8 +41,8 @@ const Sidebar: FC<SidebarProps> = ({ regions }) => {
             options={adminitriesOptions}
           />
 
-          <div>
-            <p className="py-1">Показатель востребованности:</p>
+          <div className="mb-3">
+            <p className="category-title py-1">Показатель востребованности:</p>
             <div className="flex flex-row align-center justify-between">
               <div className="flex flex-row align-center">
                 <p>от</p>

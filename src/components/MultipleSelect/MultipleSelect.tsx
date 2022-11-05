@@ -12,8 +12,8 @@ const MultipleSelect: FC<MultipleSelectProps> = ({ options, title }) => {
   const [chooseAll, setChooseAll] = useState<boolean>(false);
 
   return (
-    <div className="w-full flex flex-col items-start justify-center">
-      {title && <p className="py-1">{title}</p>}
+    <div className="w-full flex flex-col items-start justify-center mb-3">
+      {title && <p className="category-title py-1">{title}</p>}
       <Select
         className="w-full"
         isDisabled={chooseAll}
