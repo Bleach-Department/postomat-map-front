@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const $api = axios.create({
-  baseURL: "", // !! Server URL
+  baseURL: "https://plony.ru", // !! Server URL
 });
 
 /*
