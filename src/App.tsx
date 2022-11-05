@@ -1,84 +1,91 @@
 import { FC, useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import { GeoJsonLayer } from "@deck.gl/layers/typed";
+import { HeatmapLayer } from "@deck.gl/aggregation-layers/typed";
 
-import { MapGL } from "./components";
+import { requestData } from "./store/reducers/user/UserActionCreator";
 
-import { InitialViewStateType } from "./components/MapGL/types";
-// import { useAppDispatch, useAppSelector } from "./hooks/redux";
+import { MapGL, Sidebar } from "./components";
+import MapSwitch from "./components/MapSwitch/MapSwitch";
+
+import { mapStyle } from "./util/mapStyle";
+import { initialMapViewState } from "./util/initialMapViewState";
+
 import { Buffer } from "buffer";
 global.Buffer = Buffer;
 
 type Props = {};
 
 const App: FC<Props> = () => {
-  /* 
-  !! useAppDispatch для вызова reducer
-  !! useAppSelector для получения стейта
-
   const dispatch = useAppDispatch();
-  const { isLoading, test, userError } = useAppSelector(
-    (state) => state.userReducer
-  );
-  */
+  const { regions, mapState } = useAppSelector((state) => state.userReducer);
 
-  // useEffect(() => {
-  //   if (map) {
-  //     map.on("load", () => console.log(map.getCanvas().toDataURL()));
-  //   }
-  // }, [map]);
-
-  const [initialViewState] = useState<InitialViewStateType>({
-    longitude: 37.6174943,
-    latitude: 55.7504461,
-    zoom: 7.6,
-  });
-  const [mapStyle] = useState<string>(
-    "mapbox://styles/mapbox/navigation-night-v1"
-  );
-  const [data, setData] = useState<any>(null);
-  const geojsonFileName: string = "ao.json";
-
-  useEffect(() => {
-    const fetchData: () => void = async () => {
-      await fetch(geojsonFileName, {
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      })
-        .then(function (response) {
-          return response.json();
-        })
-        .then(function (myJson) {
-          setData(myJson);
-        });
-    };
-    fetchData();
-  }, []);
-
-  const layers: any[] = [
+  const pointsLayers: any[] = [
     new GeoJsonLayer({
-      id: "geojson-layer",
-      data,
+      id: "administries-layer",
+      data: regions,
       pickable: true,
       stroked: true,
       filled: false,
       pointType: "circle",
       lineWidthScale: 20,
       lineWidthMinPixels: 1.5,
+      lineCapRounded: true,
+      lineJointRounded: true,
       getLineColor: [255, 255, 0],
     }),
   ];
 
+  const heatmap_data = [
+    { COORDINATES: [36.81592, 55.48426], WEIGHT: 1 },
+    { COORDINATES: [37.81592, 55.78426], WEIGHT: 2 },
+  ];
+
+  const heatmapLayers: any[] = [
+    new HeatmapLayer({
+      id: "heatmap-layer",
+      data: heatmap_data,
+      getPosition: (d) => d.COORDINATES,
+      getWeight: (d) => d.WEIGHT,
+      aggregation: "SUM",
+    }),
+  ];
+
+  const [activeLayer, setActiveLayer] = useState<any[]>(pointsLayers);
+
+  useEffect(() => {
+    dispatch(requestData());
+  }, []);
+
+  useEffect(() => {
+    switch (mapState) {
+      case "Points":
+        setActiveLayer(heatmapLayers);
+        break;
+
+      case "Heatmap":
+        setActiveLayer(pointsLayers);
+        break;
+
+      default:
+        setActiveLayer(pointsLayers);
+        console.error("Unknown layer");
+    }
+
+    console.log(activeLayer);
+    
+  }, [mapState]);
+
   return (
     <>
+      <Sidebar />
+      <MapSwitch />
       <MapGL
-        initialViewState={initialViewState}
+        initialViewState={initialMapViewState}
         mapStyle={mapStyle}
-        layers={layers}
+        layers={activeLayer}
       />
     </>
-    // <PdfReport />
   );
 };
 

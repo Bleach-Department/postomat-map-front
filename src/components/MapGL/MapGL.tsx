@@ -54,6 +54,7 @@ const MapGL: FC<Props> = ({ initialViewState, mapStyle, layers }) => {
       initialViewState={initialViewState}
       controller={true}
       layers={layers}
+      getTooltip={({ object }) => object && object.properties.name}
     >
       <Map ref={mapRef} mapStyle={mapStyle} preserveDrawingBuffer={true} />
     </DeckGL>

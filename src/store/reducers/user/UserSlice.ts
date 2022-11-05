@@ -1,15 +1,26 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-import { registration } from "./UserActionCreator";
+import { requestData } from "./UserActionCreator";
+
+import { seletOptionType } from "../../../types/seletOptionType";
+import { MapStateType } from "../../../types/mapStateTypes";
 
 interface UserState {
-  test: any; // !! Example
+  regions: any;
+  disctricts: any;
+  regionsOptions: seletOptionType[];
+  districtsOptions: seletOptionType[];
+  mapState: MapStateType;
   isLoading: boolean;
   userError: string;
 }
 
 const initialState: UserState = {
-  test: {}, // !! Example
+  regions: {},
+  disctricts: {},
+  regionsOptions: [],
+  districtsOptions: [],
+  mapState: "Points",
   isLoading: false,
   userError: "",
 };
@@ -17,36 +28,33 @@ const initialState: UserState = {
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: { //usual reducers
-    // !! Example
-    setTest(state, action: PayloadAction<any>) {
-      state.test = action.payload;
+  reducers: {
+    setMapState(state, action: PayloadAction<MapStateType>) {
+      state.mapState = action.payload;
     },
   },
   extraReducers: {
-    //for async
-    // !! Example
-    [registration.fulfilled.type]: (
-      state,
-      action: PayloadAction<{
-        accessToken: string;
-        refresToken: string;
-      }>
-    ) => {
-      state.test = action.payload;
+    [requestData.fulfilled.type]: (state, action: PayloadAction<any>) => {
+      state.regions = action.payload.regions;
+      state.disctricts = action.payload.disctricts;
+      state.regionsOptions = action.payload.regionsOptions;
+      state.districtsOptions = action.payload.districtsOptions;
       state.isLoading = false;
       state.userError = "";
     },
-    [registration.pending.type]: (state) => {
+    [requestData.pending.type]: (state) => {
       state.isLoading = true;
     },
-    [registration.rejected.type]: (state) => {
-      state.test = {};
+    [requestData.rejected.type]: (state) => {
+      state.regions = [];
+      state.disctricts = [];
+      state.regionsOptions = [];
+      state.districtsOptions = [];
       state.isLoading = false;
     },
   },
 });
 
-export const { setTest } = userSlice.actions;
+export const { setMapState } = userSlice.actions;
 
 export default userSlice.reducer;
