@@ -1,6 +1,7 @@
 import { FC, useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import { GeoJsonLayer } from "@deck.gl/layers/typed";
+import { HeatmapLayer } from "@deck.gl/aggregation-layers/typed";
 
 import { MapGL, Sidebar } from "./components";
 import MapSwitch from "./components/MapSwitch/MapSwitch";
@@ -28,10 +29,10 @@ const App: FC<Props> = () => {
     dispatch(requestData());
   }, []);
 
-  const layers: any[] = useMemo(
+  const pointsLayers: any[] = useMemo(
     () => [
       new GeoJsonLayer({
-        id: "geojson-layer",
+        id: "administries-layer",
         data,
         pickable: true,
         stroked: true,
@@ -39,7 +40,27 @@ const App: FC<Props> = () => {
         pointType: "circle",
         lineWidthScale: 20,
         lineWidthMinPixels: 1.5,
+        lineCapRounded: true,
+        lineJointRounded: true,
         getLineColor: [255, 255, 0],
+      }),
+    ],
+    [data]
+  );
+
+  const heatmap_data = [
+    { COORDINATES: [36.81592, 55.48426], WEIGHT: 1 },
+    { COORDINATES: [37.81592, 55.78426], WEIGHT: 1 },
+  ];
+
+  const heatmapLayers: any[] = useMemo(
+    () => [
+      new HeatmapLayer({
+        id: "heatmap-layer",
+        data,
+        getPosition: (d) => d.COORDINATES,
+        getWeight: (d) => d.WEIGHT,
+        aggregation: "SUM",
       }),
     ],
     [data]
@@ -54,7 +75,7 @@ const App: FC<Props> = () => {
           <MapGL
             initialViewState={initialViewState}
             mapStyle={mapStyle}
-            layers={layers}
+            layers={heatmapLayers}
           />
         </>
       )}

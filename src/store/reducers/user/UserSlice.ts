@@ -3,10 +3,12 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { requestData } from "./UserActionCreator";
 
 import { seletOptionType } from "../../../types/seletOptionType";
+import { MapStateType } from "../../../types/mapStateTypes";
 
 interface UserState {
   data: any;
   regions: seletOptionType[];
+  mapState: MapStateType;
   isLoading: boolean;
   userError: string;
 }
@@ -14,6 +16,7 @@ interface UserState {
 const initialState: UserState = {
   data: {},
   regions: [],
+  mapState: "Points",
   isLoading: false,
   userError: "",
 };
@@ -21,7 +24,11 @@ const initialState: UserState = {
 export const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setMapState(state, action: PayloadAction<MapStateType>) {
+      state.mapState = action.payload;
+    },
+  },
   extraReducers: {
     [requestData.fulfilled.type]: (state, action: PayloadAction<any>) => {
       state.data = action.payload.data;
@@ -39,6 +46,6 @@ export const userSlice = createSlice({
   },
 });
 
-// export const { setTest } = userSlice.actions;
+export const { setMapState } = userSlice.actions;
 
 export default userSlice.reducer;
