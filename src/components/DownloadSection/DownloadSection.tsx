@@ -1,5 +1,4 @@
 import { memo, useMemo } from "react";
-import Select from "react-select";
 
 const DownloadSection = () => {
   const formatOptions = useMemo(
