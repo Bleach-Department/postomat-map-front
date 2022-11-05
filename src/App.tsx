@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import { GeoJsonLayer } from "@deck.gl/layers/typed";
 import { HeatmapLayer } from "@deck.gl/aggregation-layers/typed";
@@ -10,9 +10,6 @@ import MapSwitch from "./components/MapSwitch/MapSwitch";
 
 import { mapStyle } from "./util/mapStyle";
 import { initialMapViewState } from "./util/initialMapViewState";
-
-import { Buffer } from "buffer";
-global.Buffer = Buffer;
 
 type Props = {};
 
