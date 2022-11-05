@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
 import { GeoJsonLayer } from "@deck.gl/layers/typed";
 
-import { MapGL, PdfReport } from "./components";
+import { MapGL } from "./components";
 
 import { InitialViewStateType } from "./components/MapGL/types";
-import { useAppDispatch, useAppSelector } from "./hooks/redux";
+// import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import { Buffer } from "buffer";
 global.Buffer = Buffer;
 
