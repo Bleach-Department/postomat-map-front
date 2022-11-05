@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { setMapState } from "../../store/reducers/user/UserSlice";
 import { MapStateType } from "../../types/mapStateTypes";
@@ -28,7 +28,12 @@ const MapSwitch = () => {
     []
   );
 
-  const handleLeftClick = () => {
+  const [activeItem, setActiveItem] = useState<{
+    label: string;
+    value: MapStateType;
+  }>(switchItems[0]);
+
+  const handleLeftClick = useCallback(() => {
     const nextIndex = switchItems.indexOf(activeItem) - 1;
 
     if (nextIndex < 0) {
@@ -38,9 +43,9 @@ const MapSwitch = () => {
     }
 
     dispatch(setMapState(activeItem.value));
-  };
+  }, [activeItem]);
 
-  const handleRightClick = () => {
+  const handleRightClick = useCallback(() => {
     const nextIndex = switchItems.indexOf(activeItem) + 1;
 
     if (nextIndex > switchItems.length - 1) {
@@ -50,12 +55,7 @@ const MapSwitch = () => {
     }
 
     dispatch(setMapState(activeItem.value));
-  };
-
-  const [activeItem, setActiveItem] = useState<{
-    label: string;
-    value: MapStateType;
-  }>(switchItems[0]);
+  }, [activeItem]);
 
   return (
     <div className="map-switch-container">
@@ -72,4 +72,4 @@ const MapSwitch = () => {
   );
 };
 
-export default MapSwitch;
+export default memo(MapSwitch);

@@ -10,16 +10,39 @@ export const requestData = createAsyncThunk(
 
       console.log(response.data);
 
-      const regions = response.data.features.map((feature: any) => {
+      const regions = response.data.features.filter(
+        (feature: any) => !feature.properties.parent_id
+      );
+
+      const districts = response.data.features.filter(
+        (feature: any) => feature.properties.parent_id
+      );
+
+      const regionsOptions = regions.map((feature: any) => {
         return {
           value: feature.properties.name,
-          label: feature.properties.abbr
-        }
+          label: feature.properties.abbr,
+        };
+      });
+
+      const districtsOptions = districts.map((feature: any) => {
+        return {
+          value: feature.properties.name,
+          label: feature.properties.abbr,
+        };
       });
 
       return {
-        data: response.data,
-        regions
+        regions: {
+          features: regions,
+          type: "FeatureCollection",
+        },
+        districts: {
+          features: districts,
+          type: "FeatureCollection",
+        },
+        regionsOptions,
+        districtsOptions,
       };
     } catch (err: any) {
       console.error(err.response.data.message);

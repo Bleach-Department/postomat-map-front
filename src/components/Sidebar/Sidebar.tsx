@@ -1,20 +1,20 @@
-import { FC, useState } from "react";
+import { useState } from "react";
+import { useAppSelector } from "../../hooks/redux";
 
 import DownloadSection from "../DownloadSection/DownloadSection";
 import MultipleSelect from "../MultipleSelect/MultipleSelect";
 import OpenButton from "./components/OpenButton/OpenButton";
+import DiscreteSlider from "../DiscreteSlider/DiscreteSlider";
+
+import { placeTypes } from "../../util/placeTypes";
 
 import "./Sidebar.css";
 
-import { seletOptionType } from "../../types/seletOptionType";
+const Sidebar = () => {
+  const { regionsOptions, districtsOptions } = useAppSelector(
+    (state) => state.userReducer
+  );
 
-import { adminitriesOptions } from "./snapshots";
-
-interface SidebarProps {
-  regions: seletOptionType[];
-}
-
-const Sidebar: FC<SidebarProps> = ({ regions }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -31,15 +31,12 @@ const Sidebar: FC<SidebarProps> = ({ regions }) => {
 
           <MultipleSelect
             title="Административные округ(а):"
-            options={regions}
+            options={regionsOptions}
           />
 
-          <MultipleSelect title="Район(ы):" options={adminitriesOptions} />
+          <MultipleSelect title="Район(ы):" options={districtsOptions} />
 
-          <MultipleSelect
-            title="Тип объекта размещения:"
-            options={adminitriesOptions}
-          />
+          <MultipleSelect title="Тип объекта размещения:" options={placeTypes} />
 
           <div className="mb-3">
             <p className="category-title py-1">Показатель востребованности:</p>
@@ -63,6 +60,11 @@ const Sidebar: FC<SidebarProps> = ({ regions }) => {
                 />
               </div>
             </div>
+          </div>
+
+          <div className="flex flex-col">
+            <p className="category-title py-1">Расстояние:</p>
+            <DiscreteSlider />
           </div>
 
           <button className="extract-btn mt-3">Применить</button>

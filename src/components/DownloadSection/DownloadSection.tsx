@@ -1,14 +1,6 @@
-import { memo, useMemo } from "react";
+import { memo } from "react";
 
 const DownloadSection = () => {
-  const formatOptions = useMemo(
-    () => [
-      { value: "PDF", label: "PDF" },
-      { value: "Excel", label: "Excel" },
-    ],
-    []
-  );
-
   return (
     <section className="mt-3">
       <hr />

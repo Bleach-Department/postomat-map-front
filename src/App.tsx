@@ -13,7 +13,9 @@ type Props = {};
 
 const App: FC<Props> = () => {
   const dispatch = useAppDispatch();
-  const { regions, data } = useAppSelector((state) => state.userReducer);
+  const { regions, regionsOptions } = useAppSelector(
+    (state) => state.userReducer
+  );
 
   const [initialViewState] = useState<InitialViewStateType>({
     longitude: 37.6174943,
@@ -33,7 +35,7 @@ const App: FC<Props> = () => {
     () => [
       new GeoJsonLayer({
         id: "administries-layer",
-        data,
+        data: regions,
         pickable: true,
         stroked: true,
         filled: false,
@@ -45,40 +47,36 @@ const App: FC<Props> = () => {
         getLineColor: [255, 255, 0],
       }),
     ],
-    [data]
+    [regions]
   );
 
   const heatmap_data = [
     { COORDINATES: [36.81592, 55.48426], WEIGHT: 1 },
-    { COORDINATES: [37.81592, 55.78426], WEIGHT: 1 },
+    { COORDINATES: [37.81592, 55.78426], WEIGHT: 2 },
   ];
 
   const heatmapLayers: any[] = useMemo(
     () => [
       new HeatmapLayer({
         id: "heatmap-layer",
-        data,
+        data: heatmap_data,
         getPosition: (d) => d.COORDINATES,
         getWeight: (d) => d.WEIGHT,
         aggregation: "SUM",
       }),
     ],
-    [data]
+    []
   );
 
   return (
     <>
-      {data && (
-        <>
-          <Sidebar regions={regions} />
-          <MapSwitch />
-          <MapGL
-            initialViewState={initialViewState}
-            mapStyle={mapStyle}
-            layers={heatmapLayers}
-          />
-        </>
-      )}
+      <Sidebar />
+      <MapSwitch />
+      <MapGL
+        initialViewState={initialViewState}
+        mapStyle={mapStyle}
+        layers={heatmapLayers}
+      />
     </>
   );
 };
