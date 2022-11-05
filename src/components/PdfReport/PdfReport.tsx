@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import { Page, Text, View, Document, StyleSheet } from "@react-18-pdf/renderer";
 
 type Props = {};
 
