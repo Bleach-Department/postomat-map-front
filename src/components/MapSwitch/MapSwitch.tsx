@@ -43,7 +43,7 @@ const MapSwitch = () => {
     }
 
     dispatch(setMapState(activeItem.value));
-  }, [activeItem]);
+  }, [activeItem, dispatch, switchItems]);
 
   const handleRightClick = useCallback(() => {
     const nextIndex = switchItems.indexOf(activeItem) + 1;
@@ -55,7 +55,7 @@ const MapSwitch = () => {
     }
 
     dispatch(setMapState(activeItem.value));
-  }, [activeItem]);
+  }, [activeItem, dispatch, switchItems]);
 
   return (
     <div className="map-switch-container">
