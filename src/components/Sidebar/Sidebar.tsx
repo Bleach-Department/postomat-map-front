@@ -5,6 +5,7 @@ import DownloadSection from "../DownloadSection/DownloadSection";
 import MultipleSelect from "../MultipleSelect/MultipleSelect";
 import OpenButton from "./components/OpenButton/OpenButton";
 import DiscreteSlider from "../DiscreteSlider/DiscreteSlider";
+import DemandIndexSection from "./components/DemandIndexSection/DemandIndexSection";
 
 import { placeTypes } from "../../util/placeTypes";
 
@@ -36,31 +37,12 @@ const Sidebar = () => {
 
           <MultipleSelect title="Район(ы):" options={districtsOptions} />
 
-          <MultipleSelect title="Тип объекта размещения:" options={placeTypes} />
+          <MultipleSelect
+            title="Тип объекта размещения:"
+            options={placeTypes}
+          />
 
-          <div className="mb-3">
-            <p className="category-title py-1">Показатель востребованности:</p>
-            <div className="flex flex-row align-center justify-between">
-              <div className="flex flex-row align-center">
-                <p>от</p>
-                <input
-                  className="input-small w-full"
-                  type="number"
-                  value="0"
-                  onChange={() => {}}
-                />
-              </div>
-              <div className="flex flex-row align-center">
-                <p>до</p>
-                <input
-                  className="input-small w-full"
-                  type="number"
-                  value="100"
-                  onChange={() => {}}
-                />
-              </div>
-            </div>
-          </div>
+          <DemandIndexSection />
 
           <div className="flex flex-col">
             <p className="category-title py-1">Расстояние:</p>
