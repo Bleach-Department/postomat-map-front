@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import { GeoJsonLayer } from "@deck.gl/layers/typed";
 
 import { MapGL, Sidebar } from "./components";
+import MapSwitch from "./components/MapSwitch/MapSwitch";
 
 import { InitialViewStateType } from "./components/MapGL/types";
 import { requestData } from "./store/reducers/user/UserActionCreator";
@@ -11,7 +12,7 @@ type Props = {};
 
 const App: FC<Props> = () => {
   const dispatch = useAppDispatch();
-  const { data, regions } = useAppSelector((state) => state.userReducer);
+  const { regions, data } = useAppSelector((state) => state.userReducer);
 
   const [initialViewState] = useState<InitialViewStateType>({
     longitude: 37.6174943,
@@ -41,7 +42,7 @@ const App: FC<Props> = () => {
         getLineColor: [255, 255, 0],
       }),
     ],
-    [data]  
+    [data]
   );
 
   return (
@@ -49,6 +50,7 @@ const App: FC<Props> = () => {
       {data && (
         <>
           <Sidebar regions={regions} />
+          <MapSwitch />
           <MapGL
             initialViewState={initialViewState}
             mapStyle={mapStyle}
