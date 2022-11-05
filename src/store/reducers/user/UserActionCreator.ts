@@ -13,7 +13,7 @@ export const requestData = createAsyncThunk(
       const regions = response.data.features.map((feature: any) => {
         return {
           value: feature.properties.name,
-          label: feature.properties.name
+          label: feature.properties.abbr
         }
       });
 

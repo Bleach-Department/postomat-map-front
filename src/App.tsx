@@ -41,17 +41,21 @@ const App: FC<Props> = () => {
         getLineColor: [255, 255, 0],
       }),
     ],
-    [data]
+    [data]  
   );
 
   return (
     <>
-      <Sidebar regions={regions} />
-      <MapGL
-        initialViewState={initialViewState}
-        mapStyle={mapStyle}
-        layers={layers}
-      />
+      {data && (
+        <>
+          <Sidebar regions={regions} />
+          <MapGL
+            initialViewState={initialViewState}
+            mapStyle={mapStyle}
+            layers={layers}
+          />
+        </>
+      )}
     </>
   );
 };

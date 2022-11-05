@@ -1,9 +1,11 @@
 import { FC, memo, useState } from "react";
 import Select from "react-select";
 
+import { seletOptionType } from "../../types/seletOptionType";
+
 interface MultipleSelectProps {
   title?: string;
-  options: any[];
+  options: seletOptionType[];
 }
 
 const MultipleSelect: FC<MultipleSelectProps> = ({ options, title }) => {
@@ -16,10 +18,10 @@ const MultipleSelect: FC<MultipleSelectProps> = ({ options, title }) => {
         className="w-full"
         isDisabled={chooseAll}
         closeMenuOnSelect={false}
-        defaultValue={[options[0], options[1]]}
         options={options}
         maxMenuHeight={150}
         defaultInputValue={"Выбрать"}
+        placeholder={"Выбрать"}
         noOptionsMessage={() => "Здесь ничего нет"}
         isMulti
       />
@@ -36,4 +38,4 @@ const MultipleSelect: FC<MultipleSelectProps> = ({ options, title }) => {
   );
 };
 
-export default memo(MultipleSelect);
+export default MultipleSelect;

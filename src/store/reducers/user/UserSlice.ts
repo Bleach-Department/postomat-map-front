@@ -2,9 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { requestData } from "./UserActionCreator";
 
+import { seletOptionType } from "../../../types/seletOptionType";
+
 interface UserState {
   data: any;
-  regions: string[];
+  regions: seletOptionType[];
   isLoading: boolean;
   userError: string;
 }
@@ -21,10 +23,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [requestData.fulfilled.type]: (
-      state,
-      action: PayloadAction<any>
-    ) => {
+    [requestData.fulfilled.type]: (state, action: PayloadAction<any>) => {
       state.data = action.payload.data;
       state.regions = action.payload.regions;
       state.isLoading = false;

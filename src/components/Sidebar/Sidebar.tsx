@@ -6,10 +6,12 @@ import OpenButton from "./components/OpenButton/OpenButton";
 
 import "./Sidebar.css";
 
+import { seletOptionType } from "../../types/seletOptionType";
+
 import { adminitriesOptions } from "./snapshots";
 
 interface SidebarProps {
-  regions: string[];
+  regions: seletOptionType[];
 }
 
 const Sidebar: FC<SidebarProps> = ({ regions }) => {
@@ -44,7 +46,12 @@ const Sidebar: FC<SidebarProps> = ({ regions }) => {
             <div className="flex flex-row align-center justify-between">
               <div className="flex flex-row align-center">
                 <p>от</p>
-                <input className="input-small w-full" type="number" value="0" />
+                <input
+                  className="input-small w-full"
+                  type="number"
+                  value="0"
+                  onChange={() => {}}
+                />
               </div>
               <div className="flex flex-row align-center">
                 <p>до</p>
@@ -52,6 +59,7 @@ const Sidebar: FC<SidebarProps> = ({ regions }) => {
                   className="input-small w-full"
                   type="number"
                   value="100"
+                  onChange={() => {}}
                 />
               </div>
             </div>
