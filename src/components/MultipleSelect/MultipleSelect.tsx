@@ -20,7 +20,6 @@ const MultipleSelect: FC<MultipleSelectProps> = ({ options, title }) => {
         closeMenuOnSelect={false}
         options={options}
         maxMenuHeight={150}
-        defaultInputValue={"Выбрать"}
         placeholder={"Выбрать"}
         noOptionsMessage={() => "Здесь ничего нет"}
         isMulti
@@ -38,4 +37,4 @@ const MultipleSelect: FC<MultipleSelectProps> = ({ options, title }) => {
   );
 };
 
-export default MultipleSelect;
+export default memo(MultipleSelect);
