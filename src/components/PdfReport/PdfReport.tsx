@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import { useAppSelector } from "../../hooks/redux";
 
 type Props = {};
 
@@ -16,6 +17,10 @@ const styles = StyleSheet.create({
 });
 
 const PdfReport: FC<Props> = () => {
+  const { isLoading } = useAppSelector((state) => state.userReducer);
+
+  console.log(isLoading);
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
