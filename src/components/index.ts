@@ -1,3 +1,4 @@
 import MapGL from "./MapGL";
+import PdfReport from "./PdfReport";
 
-export { MapGL };
+export { MapGL, PdfReport };
