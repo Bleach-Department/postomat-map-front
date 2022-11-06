@@ -5,7 +5,7 @@ import { HeatmapLayer } from "@deck.gl/aggregation-layers/typed";
 
 import { requestData } from "./store/reducers/user/UserActionCreator";
 
-import { MapGL, Sidebar } from "./components";
+import { MapGL, PdfReport, Sidebar } from "./components";
 import MapSwitch from "./components/MapSwitch/MapSwitch";
 
 import { mapStyle } from "./util/mapStyle";
@@ -18,7 +18,9 @@ type Props = {};
 
 const App: FC<Props> = () => {
   const dispatch = useAppDispatch();
-  const { regions, mapState } = useAppSelector((state) => state.userReducer);
+  const { regions, mapState, mapImageSrc } = useAppSelector(
+    (state) => state.userReducer
+  );
 
   const pointsLayers: any[] = [
     new GeoJsonLayer({
@@ -73,13 +75,13 @@ const App: FC<Props> = () => {
     }
 
     console.log(activeLayer);
-    
   }, [mapState]);
 
   return (
     <>
       <Sidebar />
       <MapSwitch />
+
       <MapGL
         initialViewState={initialMapViewState}
         mapStyle={mapStyle}
