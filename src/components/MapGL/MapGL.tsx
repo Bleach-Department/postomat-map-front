@@ -46,6 +46,7 @@ const MapGL: FC<Props> = ({ initialViewState, mapStyle }) => {
       mapStyle={mapStyle}
       interactiveLayerIds={mapState === "Points" ? ["unclustered-point"] : []}
       onMouseMove={onHover}
+      mapboxAccessToken={process.env.REACT_APP_MAPBOX_ACCESS_TOKEN}
     >
       {mapState === "Points" && (
         <>
