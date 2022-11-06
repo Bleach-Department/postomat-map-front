@@ -34,4 +34,7 @@ sketch
 # Env files
 .env
 
+# Buiild
+/build
+
 # End of https://www.toptal.com/developers/gitignore/api/react,visualstudiocode

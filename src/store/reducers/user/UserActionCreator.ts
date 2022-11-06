@@ -1,12 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
-import AuthService from "../../../services/UserService";
+import UserService from "../../../services/UserService";
 
 export const requestData = createAsyncThunk(
   "user/requestData",
   async (_, thunkAPI) => {
     try {
-      const response = await AuthService.requestData();
+      const response = await UserService.requestData();
 
       console.log(response.data);
 
@@ -44,6 +44,22 @@ export const requestData = createAsyncThunk(
         regionsOptions,
         districtsOptions,
       };
+    } catch (err: any) {
+      console.error(err.response.data.message);
+      return thunkAPI.rejectWithValue("Не удалось получить данные!");
+    }
+  }
+);
+
+export const getPoints = createAsyncThunk(
+  "user/getPoints",
+  async (_, thunkAPI) => {
+    try {
+      const response = await UserService.getPoints();
+
+      console.log(response.data);
+
+      return response.data;
     } catch (err: any) {
       console.error(err.response.data.message);
       return thunkAPI.rejectWithValue("Не удалось получить данные!");
