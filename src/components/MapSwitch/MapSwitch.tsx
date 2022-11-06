@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setMapState } from "../../store/reducers/user/UserSlice";
 import { MapStateType } from "../../types/mapStateTypes";
@@ -10,23 +10,16 @@ import "./MapSwitch.css";
 const MapSwitch = () => {
   const dispatch = useDispatch();
 
-  const switchItems = useMemo(
-    () => [
-      {
-        label: "Точки",
-        value: "Points" as MapStateType,
-      },
-      {
-        label: "Сектора",
-        value: "Sectors" as MapStateType,
-      },
-      {
-        label: "Heatmap",
-        value: "Heatmap" as MapStateType,
-      },
-    ],
-    []
-  );
+  const switchItems = [
+    {
+      label: "Точки",
+      value: "Points" as MapStateType,
+    },
+    {
+      label: "Heatmap",
+      value: "Heatmap" as MapStateType,
+    },
+  ];
 
   const [activeItem, setActiveItem] = useState<{
     label: string;
@@ -34,27 +27,33 @@ const MapSwitch = () => {
   }>(switchItems[0]);
 
   const handleLeftClick = () => {
-    const nextIndex = switchItems.indexOf(activeItem) - 1;
+    const currItem = switchItems.find((el) => el.value === activeItem.value);
+    if (!currItem) return;
+
+    const nextIndex = switchItems.indexOf(currItem) - 1;
 
     if (nextIndex < 0) {
       setActiveItem(switchItems[switchItems.length - 1]);
+      dispatch(setMapState(switchItems[switchItems.length - 1].value));
     } else {
       setActiveItem(switchItems[nextIndex]);
+      dispatch(setMapState(switchItems[nextIndex].value));
     }
-
-    dispatch(setMapState(activeItem.value));
   };
 
   const handleRightClick = () => {
-    const nextIndex = switchItems.indexOf(activeItem) + 1;
+    const currItem = switchItems.find((el) => el.value === activeItem.value);
+    if (!currItem) return;
+
+    const nextIndex = switchItems.indexOf(currItem) + 1;
 
     if (nextIndex > switchItems.length - 1) {
       setActiveItem(switchItems[0]);
+      dispatch(setMapState(switchItems[0].value));
     } else {
       setActiveItem(switchItems[nextIndex]);
+      dispatch(setMapState(switchItems[nextIndex].value));
     }
-
-    dispatch(setMapState(activeItem.value));
   };
 
   return (

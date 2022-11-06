@@ -42,6 +42,7 @@ export const unclusteredPointLayer: LayerProps = {
     "circle-stroke-width": 1,
     "circle-stroke-color": "#fff",
   },
+  interactive: true,
 };
 
 const MAX_ZOOM_LEVEL = 20;
@@ -53,7 +54,7 @@ export const heatmapLayer: HeatmapLayer = {
   source: "earthquakes",
   paint: {
     // Increase the heatmap weight based on frequency and property magnitude
-    "heatmap-weight": ["interpolate", ["linear"], ["get", "mag"], 0, 0, 6, 1],
+    "heatmap-weight": ["interpolate", ["linear"], ["get", "score"], 0, 0, 6, 1],
     // Increase the heatmap color weight weight by zoom level
     // heatmap-intensity is a multiplier on top of heatmap-weight
     "heatmap-intensity": [
@@ -96,6 +97,6 @@ export const heatmapLayer: HeatmapLayer = {
       20,
     ],
     // Transition from heatmap to circle layer by zoom level
-    "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 7, 1, 9, 0],
+    "heatmap-opacity": ["interpolate", ["linear"], ["zoom"], 7, 1, 50, 0],
   },
 };

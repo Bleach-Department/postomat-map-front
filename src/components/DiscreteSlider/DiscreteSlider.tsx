@@ -13,7 +13,7 @@ const DiscreteSlider = () => {
         defaultValue={250}
         getAriaValueText={getSliderValue}
         valueLabelDisplay="auto"
-        step={50}
+        step={100}
         marks
         min={100}
         max={400}

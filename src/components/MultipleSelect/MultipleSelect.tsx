@@ -6,9 +6,15 @@ import { seletOptionType } from "../../types/seletOptionType";
 interface MultipleSelectProps {
   title?: string;
   options: seletOptionType[];
+  onChange: (val: any) => void;
 }
 
-const MultipleSelect: FC<MultipleSelectProps> = ({ options, title }) => {
+const MultipleSelect: FC<MultipleSelectProps> = ({
+  options,
+  title,
+  
+  onChange,
+}) => {
   const [chooseAll, setChooseAll] = useState<boolean>(false);
 
   return (
@@ -22,6 +28,7 @@ const MultipleSelect: FC<MultipleSelectProps> = ({ options, title }) => {
         maxMenuHeight={150}
         placeholder={"Выбрать"}
         noOptionsMessage={() => "Здесь ничего нет"}
+        onChange={onChange}
         isMulti
       />
       <div className="flex items-center my-1 gap-1">

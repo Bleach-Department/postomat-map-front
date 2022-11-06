@@ -26,7 +26,7 @@ export const placeTypes = [
     value: "Market",
   },
   {
-    label: "Бумажный киоск",
+    label: "Нестационарные торговые объекты по реализации печатной продукции",
     value: "PaperKiosks",
   },
   {

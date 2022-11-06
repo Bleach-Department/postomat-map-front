@@ -6,4 +6,5 @@ export type pointResponse = {
   };
   regionId: number | null;
   type: string;
+  score: number;
 };

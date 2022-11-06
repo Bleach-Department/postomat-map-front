@@ -1,8 +1,32 @@
-import { memo, useState } from "react";
+import { FC, memo, useEffect, useState } from "react";
+import { useAppSelector } from "../../../../hooks/redux";
 
-const DemandIndexSection = () => {
+interface DemandIndexSectionProps {
+  onChange: (val: number[]) => void;
+}
+
+const DemandIndexSection: FC<DemandIndexSectionProps> = ({ onChange }) => {
+  const { heatmap } = useAppSelector((state) => state.userReducer);
+
   const [fromValue, setFromValue] = useState<string>("0");
   const [toValue, setToValue] = useState<string>("100");
+
+  useEffect(() => {
+    if (heatmap.features) {
+      const data = [...heatmap.features];
+
+      data.sort(
+        (a: any, b: any) => a.properties.realScore - b.properties.realScore
+      );
+
+      setFromValue(data[0].properties.realScore);
+      setToValue(data[data.length - 1].properties.realScore.toFixed(2));
+    }
+  }, [heatmap]);
+
+  useEffect(() => {
+    onChange([Number(fromValue), Number(toValue)]);
+  }, [toValue, fromValue, onChange]);
 
   return (
     <div className="mb-3">
