@@ -1,9 +1,10 @@
 import DeckGL from "@deck.gl/react/typed";
-import { FC, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import Map, { MapRef } from "react-map-gl";
 import { InitialViewStateType } from "./types";
 import { DeckGLRef } from "@deck.gl/react/typed";
-import FileSaver from "file-saver";
+import { useDispatch } from "react-redux";
+import { setMapImageSrc } from "../../store/reducers/user/UserSlice";
 
 type Props = {
   initialViewState: InitialViewStateType;
@@ -12,41 +13,45 @@ type Props = {
 };
 
 const MapGL: FC<Props> = ({ initialViewState, mapStyle, layers }) => {
+  const dispatch = useDispatch();
+
   const deckRef = useRef<DeckGLRef>(null);
   const mapRef = useRef<MapRef>(null);
 
-  const handleDownload = () => {
-    const fileName = "Map.png";
+  useEffect(() => {
+    const setMapImage = () => {
+      if (!mapRef.current || !deckRef.current) return;
 
-    if (!mapRef.current || !deckRef.current) return;
+      const mapGL = mapRef.current.getMap();
+      const deck = deckRef.current.deck;
 
-    const mapGL = mapRef.current.getMap();
-    const deck = deckRef.current.deck;
+      if (!mapGL || !deck) return;
 
-    if (!mapGL || !deck) return;
+      const mapboxCanvas = mapGL.getCanvas();
+      // @ts-ignore: Unreachable code error
+      const deckglCanvas = deck.canvas as HTMLCanvasElement;
 
-    const mapboxCanvas = mapGL.getCanvas();
-    // @ts-ignore: Unreachable code error
-    const deckglCanvas = deck.canvas as HTMLCanvasElement;
+      let merge = document.createElement("canvas");
+      merge.width = mapboxCanvas.width;
+      merge.height = mapboxCanvas.height;
 
-    let merge = document.createElement("canvas");
-    merge.width = mapboxCanvas.width;
-    merge.height = mapboxCanvas.height;
+      var context = merge.getContext("2d");
 
-    var context = merge.getContext("2d");
+      if (!context) return;
 
-    if (!context) return;
+      deck.redraw("true");
+      context.globalAlpha = 1.0;
+      context.drawImage(mapboxCanvas, 0, 0);
+      context.globalAlpha = 1.0;
+      context.drawImage(deckglCanvas, 0, 0);
 
-    deck.redraw("true");
-    context.globalAlpha = 1.0;
-    context.drawImage(mapboxCanvas, 0, 0);
-    context.globalAlpha = 1.0;
-    context.drawImage(deckglCanvas, 0, 0);
+      dispatch(setMapImageSrc(merge.toDataURL("image/png")));
+    };
 
-    merge.toBlob((blob) => {
-      FileSaver.saveAs(blob as Blob, fileName);
-    });
-  };
+    setTimeout(() => {
+      setMapImage();
+    }, 1000);
+  }, [layers, dispatch]);
 
   return (
     <DeckGL

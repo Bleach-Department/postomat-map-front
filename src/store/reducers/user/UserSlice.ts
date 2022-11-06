@@ -13,6 +13,7 @@ interface UserState {
   mapState: MapStateType;
   isLoading: boolean;
   userError: string;
+  mapImageSrc: string;
 }
 
 const initialState: UserState = {
@@ -23,6 +24,7 @@ const initialState: UserState = {
   mapState: "Points",
   isLoading: false,
   userError: "",
+  mapImageSrc: "",
 };
 
 export const userSlice = createSlice({
@@ -31,6 +33,9 @@ export const userSlice = createSlice({
   reducers: {
     setMapState(state, action: PayloadAction<MapStateType>) {
       state.mapState = action.payload;
+    },
+    setMapImageSrc(state, action: PayloadAction<string>) {
+      state.mapImageSrc = action.payload;
     },
   },
   extraReducers: {
@@ -55,6 +60,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setMapState } = userSlice.actions;
+export const { setMapState, setMapImageSrc } = userSlice.actions;
 
 export default userSlice.reducer;

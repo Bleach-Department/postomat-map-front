@@ -1,30 +1,32 @@
-import { FC } from "react";
-import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
+import { FC, useEffect } from "react";
+import { Page, Document, StyleSheet, Text, Image } from "@react-pdf/renderer";
 
-type Props = {};
+type Props = {
+  imageSrc: string;
+};
 
 const styles = StyleSheet.create({
   page: {
-    flexDirection: "row",
+    flexDirection: "column",
     backgroundColor: "#E4E4E4",
   },
-  section: {
-    margin: 10,
-    padding: 10,
-    flexGrow: 1,
+  title: {
+    fontSize: 24,
+    textAlign: "center",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+  image: {
+    width: "100%",
   },
 });
 
-const PdfReport: FC<Props> = () => {
+const PdfReport: FC<Props> = ({ imageSrc }) => {
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text>Section #1</Text>
-        </View>
-        <View style={styles.section}>
-          <Text>Section #2</Text>
-        </View>
+        <Text style={styles.title}>PDF Report</Text>
+        <Image style={styles.image} source={imageSrc} />
       </Page>
     </Document>
   );
