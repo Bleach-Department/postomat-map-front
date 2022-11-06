@@ -12,7 +12,8 @@ export const requestData = createAsyncThunk(
       console.log(response.data);
 
       const regions = response.data.features.filter(
-        (feature: any) => !feature.properties.parent_id
+        (feature: any) =>
+          !feature.properties.parent_id && feature.properties.name !== "Троицкий"
       );
 
       const districts = response.data.features.filter(
@@ -102,7 +103,7 @@ export const getHeatmap = createAsyncThunk(
             },
             properties: {
               score: feature.score,
-              realScore: feature.realScore
+              realScore: feature.realScore,
             },
           };
         }),
@@ -117,7 +118,7 @@ export const getHeatmap = createAsyncThunk(
 );
 
 export const exportData = createAsyncThunk(
-  "user/getHeatmap",
+  "user/exportData",
   async (
     data: {
       mo: number[];
@@ -132,9 +133,9 @@ export const exportData = createAsyncThunk(
       console.log(response.data);
 
       const url = window.URL.createObjectURL(new Blob([response.data]));
-      const link = document.createElement('a');
+      const link = document.createElement("a");
       link.href = url;
-      link.setAttribute('download', `${Date.now()}.xlsx`);
+      link.setAttribute("download", `${Date.now()}.xlsx`);
       document.body.appendChild(link);
       link.click();
 

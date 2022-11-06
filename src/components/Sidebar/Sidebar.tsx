@@ -11,6 +11,7 @@ import DemandIndexSection from "./components/DemandIndexSection/DemandIndexSecti
 import { placeTypes } from "../../util/placeTypes";
 
 import "./Sidebar.css";
+import { setFilter } from "../../store/reducers/user/UserSlice";
 
 const Sidebar = () => {
   const dispatch = useAppDispatch();
@@ -77,6 +78,17 @@ const Sidebar = () => {
           }
         }
       }
+
+      if (districtsIds.length === 0) {
+        for (const districtFilter of disctrictFilter) {
+          for (const district of districts) {
+            if (districtFilter.value === district.properties.name) {
+              districtsIds.push(Number(district.properties.id));
+              continue;
+            }
+          }
+        }
+      }
     } else {
       districtsIds = districts
         .filter((district: any) =>
@@ -90,6 +102,14 @@ const Sidebar = () => {
     console.log("districtsIds", districtsIds);
 
     console.log("placesFilter", placesFilter);
+
+    dispatch(
+      setFilter({
+        mo: districtsIds,
+        scoreRange: scores,
+        type: placesFilter.map((item) => item.value),
+      })
+    );
 
     dispatch(
       getHeatmap({

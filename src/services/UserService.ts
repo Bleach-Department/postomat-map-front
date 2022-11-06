@@ -49,6 +49,6 @@ export default class UserService {
       params += `type=${item}&`;
     }
 
-    return $api.get<any>("/export" + params);
+    return $api.get<any>("/score/export.xlsx" + params);
   }
 }

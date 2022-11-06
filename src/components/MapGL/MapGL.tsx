@@ -35,6 +35,9 @@ const MapGL: FC<Props> = ({ initialViewState, mapStyle }) => {
     []
   );
 
+  console.log(heatmap);
+  
+
   return (
     <Map
       ref={mapRef}

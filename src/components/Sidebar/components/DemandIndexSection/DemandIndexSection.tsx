@@ -19,7 +19,7 @@ const DemandIndexSection: FC<DemandIndexSectionProps> = ({ onChange }) => {
         (a: any, b: any) => a.properties.realScore - b.properties.realScore
       );
 
-      setFromValue(data[0].properties.realScore);
+      setFromValue(data[0].properties.realScore.toFixed(2));
       setToValue(data[data.length - 1].properties.realScore.toFixed(2));
     }
   }, [heatmap]);

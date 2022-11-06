@@ -124,6 +124,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { setMapState } = userSlice.actions;
+export const { setMapState, setFilter } = userSlice.actions;
 
 export default userSlice.reducer;
